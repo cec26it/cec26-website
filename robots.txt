@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cdec26.org/sitemap.xml

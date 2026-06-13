@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Education Council, District 26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#11233A; --blue:#1A4FA0; --blue-deep:#11356E;
+    --amber:#F0A93C; --amber-deep:#B9740F;
+    --paper:#FCFCFA; --panel:#EEF2F8; --panel-2:#E3EAF4;
+    --line:#D5DEEA; --muted:#53627A; --white:#fff;
+    --serif: 'Lora', ui-serif, Georgia, "Times New Roman", serif;
+    --sans: 'Public Sans', system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --cjk-serif: 'Noto Serif SC', "Songti SC", "SimSun", ui-serif, serif;
+    --cjk-sans: 'Noto Sans SC', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --maxw:1120px;
+  }
+  html[lang="zh"]{ --serif: var(--cjk-serif); --sans: var(--cjk-sans); }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:var(--serif);line-height:1.18;letter-spacing:-0.01em;margin:0 0 .5em;}
+  h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:700;}
+  h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;}
+  h3{font-size:1.2rem;font-weight:700;}
+  p{margin:0 0 1rem;}
+  a{color:var(--blue);text-underline-offset:3px;}
+  a:hover{color:var(--blue-deep);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.12em;
+           font-size:.72rem;font-weight:700;color:var(--amber-deep);}
+  :focus-visible{outline:3px solid var(--amber-deep);outline-offset:2px;border-radius:3px;}
+
+  /* skip link */
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;
+        padding:12px 18px;z-index:200;border-radius:0 0 8px 0;}
+  .skip:focus{left:0;color:#fff;}
+
+  /* utility bar */
+  .util{background:var(--ink);color:#cdd8e8;font-size:.78rem;}
+  .util .wrap{display:flex;justify-content:space-between;align-items:center;
+              gap:12px;min-height:34px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px;}
+  .util a{color:#fff;}
+
+  /* header */
+  header.site{background:var(--white);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;}
+  .bar{display:flex;align-items:center;gap:20px;min-height:74px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);}
+  .badge{flex:0 0 auto;width:46px;height:46px;}
+  .brand .nm{font-family:var(--serif);font-weight:700;font-size:1.06rem;line-height:1.1;}
+  .brand .sub{font-family:var(--sans);font-size:.72rem;color:var(--muted);letter-spacing:.02em;}
+  .spacer{flex:1 1 auto;}
+
+  /* language switcher */
+  .lang{display:flex;align-items:center;gap:8px;font-size:.92rem;}
+  .lang button{background:none;border:none;cursor:pointer;font-family:var(--sans);
+               font-size:.92rem;color:var(--muted);padding:4px 2px;border-bottom:2.5px solid transparent;}
+  .lang button[aria-current="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--amber);}
+  .lang .div{color:var(--line);}
+
+  /* search */
+  .search{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;
+          padding:4px 6px 4px 14px;background:var(--white);}
+  .search input{border:none;outline:none;font-family:var(--sans);font-size:.9rem;
+                width:140px;background:transparent;color:var(--ink);}
+  .search button{border:none;background:var(--blue);color:#fff;width:30px;height:30px;
+                 border-radius:999px;cursor:pointer;font-size:.95rem;display:grid;place-items:center;}
+
+  /* nav */
+  .navbar{background:var(--blue-deep);}
+  nav.main{display:flex;gap:2px;flex-wrap:wrap;}
+  nav.main button{background:none;border:none;color:#dce6f5;cursor:pointer;
+                  font-family:var(--sans);font-size:.96rem;font-weight:600;
+                  padding:14px 16px;border-bottom:3px solid transparent;}
+  nav.main button:hover{background:#0d2a59;color:#fff;}
+  nav.main button[aria-current="page"]{color:#fff;border-bottom-color:var(--amber);background:#0d2a59;}
+  .menu-toggle{display:none;background:var(--blue-deep);color:#fff;border:none;
+               font-family:var(--sans);font-weight:700;font-size:1rem;padding:12px 16px;width:100%;
+               text-align:left;cursor:pointer;}
+
+  /* pages */
+  .page{display:none;}
+  .page.active{display:block;animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  section.band{padding:56px 0;}
+  section.band.alt{background:var(--panel);}
+  .lead{font-size:1.15rem;color:var(--muted);max-width:62ch;}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:
+        linear-gradient(180deg,#fff 0%, var(--panel) 100%);border-bottom:1px solid var(--line);}
+  .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
+              padding:64px 0 60px;position:relative;z-index:2;}
+  .hero h1{margin-bottom:.35em;}
+  .hero .lead{margin-bottom:1.4rem;}
+  .contours{position:absolute;inset:0;z-index:1;opacity:.5;pointer-events:none;}
+  .contours svg{position:absolute;right:-6%;top:-14%;width:62%;height:auto;min-width:560px;}
+
+  /* meeting card */
+  .mcard{background:var(--white);border:1px solid var(--line);border-radius:16px;
+         box-shadow:0 18px 40px -24px rgba(17,35,58,.45);overflow:hidden;}
+  .mcard .top{background:var(--blue-deep);color:#fff;padding:14px 22px;display:flex;
+              align-items:center;gap:10px;}
+  .mcard .top .dot{width:9px;height:9px;border-radius:99px;background:var(--amber);flex:0 0 auto;}
+  .mcard .top span{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700;}
+  .mcard .body{padding:22px;}
+  .mdate{font-family:var(--serif);font-size:1.9rem;font-weight:700;line-height:1.1;margin-bottom:2px;}
+  .mtime{color:var(--muted);margin-bottom:14px;}
+  .mrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:.97rem;}
+  .mrow .ic{flex:0 0 auto;width:20px;text-align:center;color:var(--blue);font-weight:700;}
+  .mcta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:700;
+       font-size:1rem;border-radius:10px;padding:13px 20px;cursor:pointer;text-decoration:none;
+       border:2px solid transparent;line-height:1;}
+  .btn-primary{background:var(--amber);color:var(--ink);}
+  .btn-primary:hover{background:#ffba53;color:var(--ink);}
+  .btn-secondary{background:#fff;color:var(--blue-deep);border-color:var(--line);}
+  .btn-secondary:hover{border-color:var(--blue);color:var(--blue-deep);}
+  .btn-ghost{background:var(--blue);color:#fff;}
+  .btn-ghost:hover{background:var(--blue-deep);color:#fff;}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:14px;}
+  .step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;}
+  .step .n{font-family:var(--serif);font-size:1.6rem;color:var(--amber-deep);font-weight:700;
+           line-height:1;margin-bottom:8px;}
+
+  /* task tiles */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:8px;}
+  .tile{display:flex;flex-direction:column;gap:6px;text-align:left;background:#fff;
+        border:1px solid var(--line);border-radius:14px;padding:20px;cursor:pointer;
+        font-family:var(--sans);transition:transform .15s ease,border-color .15s ease;}
+  .tile:hover{transform:translateY(-3px);border-color:var(--blue);}
+  .tile .t{font-weight:700;font-size:1.05rem;color:var(--ink);}
+  .tile .d{font-size:.9rem;color:var(--muted);}
+  .tile .arr{color:var(--amber-deep);font-weight:700;margin-top:auto;font-size:.9rem;}
+
+  /* generic content */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  ul.clean{padding-left:1.1em;margin:0 0 1rem;}
+  ul.clean li{margin-bottom:.5rem;}
+  .docs{border-top:1px solid var(--line);margin-top:8px;}
+  .doc{display:flex;justify-content:space-between;gap:16px;align-items:center;
+       padding:14px 4px;border-bottom:1px solid var(--line);}
+  .doc .dt{font-weight:600;}
+  .doc a{font-weight:700;white-space:nowrap;}
+  .note{background:var(--panel-2);border-left:4px solid var(--blue);border-radius:0 10px 10px 0;
+        padding:14px 18px;font-size:.95rem;color:var(--ink);margin:14px 0;}
+  .ph{color:var(--muted);font-size:.85rem;font-style:italic;}
+
+  /* embedded Google Drive folder mock — deliberately Google-styled, not site-styled */
+  .gwrap{margin-top:18px;}
+  .gtag{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;
+        color:#5f6368;background:#fff;border:1px solid var(--line);border-radius:999px;
+        padding:5px 12px;margin-bottom:10px;}
+  .gtag .gd{width:14px;height:12px;display:inline-block;}
+  .drive{font-family:Roboto,Arial,"Helvetica Neue",sans-serif;border:1px solid #dadce0;
+         border-radius:8px;overflow:hidden;background:#fff;max-width:620px;
+         box-shadow:0 1px 2px rgba(60,64,67,.12);}
+  .drive .dhead{display:flex;align-items:center;gap:10px;padding:12px 16px;
+                border-bottom:1px solid #e8eaed;color:#3c4043;}
+  .drive .dhead .fname{font-size:.95rem;font-weight:500;}
+  .drive .dhead .views{margin-left:auto;display:flex;gap:6px;color:#9aa0a6;}
+  .drive .dhead .views span{width:24px;height:24px;display:grid;place-items:center;
+                            border-radius:4px;font-size:.85rem;}
+  .drive .dhead .views .on{background:#e8f0fe;color:#1a73e8;}
+  .drow{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid #f1f3f4;
+        color:#3c4043;font-size:.9rem;cursor:default;}
+  .drow:last-child{border-bottom:none;}
+  .drow:hover{background:#f8f9fa;}
+  .drow .pdf{flex:0 0 auto;width:22px;height:22px;}
+  .drow .open{margin-left:auto;color:#9aa0a6;font-size:.85rem;}
+  .drive-embed{width:100%;max-width:640px;height:340px;border:1px solid #dadce0;border-radius:8px;background:#fff;}
+
+  /* footer */
+  footer.site{background:var(--ink);color:#c6d2e4;padding:48px 0 32px;margin-top:8px;}
+  footer.site h3{color:#fff;font-size:1.05rem;}
+  footer.site a{color:#fff;}
+  .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;}
+  .fnote{border-top:1px solid #28405f;margin-top:30px;padding-top:18px;font-size:.8rem;color:#8da3c2;}
+
+  @media (max-width:880px){
+    .hero .grid,.cols,.fgrid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .menu-toggle{display:block;}
+    nav.main{display:none;flex-direction:column;}
+    nav.main.open{display:flex;}
+    nav.main button{width:100%;text-align:left;border-bottom:1px solid #0d2a59;}
+    .search{display:none;}
+    .contours svg{min-width:380px;opacity:.7;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+  }
+</style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════════════════════════════
+     CEC26 WEBSITE — WHERE TO MAKE CHANGES
+     • Meeting date / time / location: search this file for "June 11, 2026"
+       (it appears on the Home hero card and on the Meetings page).
+     • Zoom registration link: search for "zoom.us/meeting/register" and
+       replace every occurrence (Home x2, Meetings, Contact) with the new link.
+     • Meeting documents (minutes/agendas): you do NOT edit this file — just
+       drop PDFs into the council's Google Drive folder. Set the folder once
+       in the Meetings section (search for "YOUR_MINUTES_FOLDER_ID").
+     • Text is bilingual: each item has data-en="..." (English) and
+       data-zh="..." (简体中文). Edit BOTH so the two languages stay in sync.
+     ════════════════════════════════════════════════════════════════════ -->
+<a href="#main" class="skip" data-en="Skip to main content" data-zh="跳至主要内容">Skip to main content</a>
+
+<!-- official banner (USWDS pattern) -->
+<div class="util">
+  <div class="wrap">
+    <span data-en="An official website of Community Education Council, District 26 — New York City"
+          data-zh="纽约市第26学区社区教育委员会官方网站">An official website of Community Education Council, District 26 — New York City</span>
+    <a href="#contact" data-nav="contact" data-en="Contact us" data-zh="联系我们">Contact us</a>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="#home" data-nav="home" aria-label="Home">
+      <svg class="badge" viewBox="0 0 46 46" aria-hidden="true">
+        <rect width="46" height="46" rx="10" fill="#11356E"/>
+        <path d="M8 30c4-1 7-6 12-6s7 5 12 4 6-7 6-7" stroke="#F0A93C" stroke-width="2" fill="none" opacity=".9"/>
+        <path d="M8 23c4-1 7-5 12-5s7 4 12 3 6-6 6-6" stroke="#5C8FD6" stroke-width="1.6" fill="none" opacity=".7"/>
+        <text x="23" y="20" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#fff">26</text>
+      </svg>
+      <span>
+        <span class="nm" data-en="Community Education Council" data-zh="社区教育委员会">Community Education Council</span><br>
+        <span class="sub" data-en="District 26 · Northeast Queens" data-zh="第26学区 · 皇后区东北部">District 26 · Northeast Queens</span>
+      </span>
+    </a>
+    <span class="spacer"></span>
+    <div class="lang" role="group" aria-label="Language / 语言">
+      <button id="lang-en" aria-current="true" onclick="setLang('en')">English</button>
+      <span class="div" aria-hidden="true">·</span>
+      <button id="lang-zh" aria-current="false" onclick="setLang('zh')">简体中文</button>
+    </div>
+    <form class="search" role="search" onsubmit="return doSearch(event)">
+      <input id="q" type="search" aria-label="Search this site"
+             data-ph-en="Search…" data-ph-zh="搜索…" placeholder="Search…">
+      <button type="submit" aria-label="Search">⌕</button>
+    </form>
+  </div>
+  <div class="navbar">
+    <div class="wrap">
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mainnav"
+              onclick="toggleMenu(this)" data-en="☰ Menu" data-zh="☰ 菜单">☰ Menu</button>
+      <nav class="main" id="mainnav" aria-label="Main">
+        <button data-nav="home" aria-current="page" onclick="go('home')" data-en="Home" data-zh="首页">Home</button>
+        <button data-nav="meetings" onclick="go('meetings')" data-en="Meetings &amp; Participation" data-zh="会议与参与">Meetings &amp; Participation</button>
+        <button data-nav="about" onclick="go('about')" data-en="About CEC26" data-zh="关于CEC26">About CEC26</button>
+        <button data-nav="actions" onclick="go('actions')" data-en="Council Actions" data-zh="委员会行动">Council Actions</button>
+        <button data-nav="families" onclick="go('families')" data-en="For Families" data-zh="家长与家庭">For Families</button>
+        <button data-nav="contact" onclick="go('contact')" data-en="Contact &amp; Get Involved" data-zh="联系与参与">Contact &amp; Get Involved</button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="contours" aria-hidden="true">
+      <svg viewBox="0 0 600 600" fill="none">
+        <g stroke="#1A4FA0" stroke-width="1.4">
+          <path d="M70 300C70 180 180 70 300 70s230 110 230 230-110 230-230 230S70 420 70 300Z" opacity=".18"/>
+          <path d="M130 300c0-94 76-170 170-170s170 76 170 170-76 170-170 170-170-76-170-170Z" opacity=".22"/>
+          <path d="M190 300c0-61 49-110 110-110s110 49 110 110-49 110-110 110-110-49-110-110Z" opacity=".26"/>
+          <path d="M250 300c0-28 22-50 50-50s50 22 50 50-22 50-50 50-50-22-50-50Z" opacity=".3"/>
+          <path d="M40 360c120 40 180-40 300-30s200 60 230 10" opacity=".16"/>
+          <path d="M40 240c120-40 180 40 300 30s200-60 230-10" opacity=".16"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap grid">
+      <div>
+        <span class="eyebrow" data-en="Parents have a voice in District 26" data-zh="第26学区，家长拥有发言权">Parents have a voice in District 26</span>
+        <h1 data-en="Your council. Your schools. Your seat at the table."
+            data-zh="您的委员会。您的学校。您的一席之地。">Your council. Your schools. Your seat at the table.</h1>
+        <p class="lead" data-en="Community Education Council 26 is the elected parent body for the public schools of northeast Queens. Come to our monthly meeting to ask questions, hear what's happening, and shape decisions about your district."
+           data-zh="第26学区社区教育委员会是皇后区东北部公立学校的民选家长机构。欢迎参加我们的月度会议，提出问题、了解最新动态，并参与影响本学区的决策。">Community Education Council 26 is the elected parent body for the public schools of northeast Queens. Come to our monthly meeting to ask questions, hear what's happening, and shape decisions about your district.</p>
+        <div class="mcta">
+          <a class="btn btn-primary" href="https://zoom.us/meeting/register/xrLSMBUPQeucaaghS0TlYA" target="_blank" rel="noopener"
+             data-en="Register for the next meeting" data-zh="报名参加下次会议">Register for the next meeting</a>
+          <button class="btn btn-secondary" onclick="go('meetings')"
+             data-en="How to participate" data-zh="如何参与">How to participate</button>
+        </div>
+      </div>
+      <div class="mcard" aria-label="Next meeting">
+        <div class="top"><span class="dot"></span><span data-en="Next monthly meeting" data-zh="下次月度会议">Next monthly meeting</span></div>
+        <div class="body">
+          <div class="mdate" data-en="Wednesday, June 11, 2026" data-zh="2026年6月11日 星期三">Wednesday, June 11, 2026</div>
+          <div class="mtime" data-en="7:00 PM Eastern Time" data-zh="美国东部时间 晚上7:00">7:00 PM Eastern Time</div>
+          <div class="mrow"><span class="ic">⌘</span><span data-en="Online — register for the Zoom link" data-zh="线上参加 — 报名获取 Zoom 链接">Online — register for the Zoom link</span></div>
+          <div class="mrow"><span class="ic">⚑</span><span data-en="In person — M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364" data-zh="现场参加 — 74Q 初中，61-15 Oceania Street, Bayside, NY 11364">In person — M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364</span></div>
+          <div class="mrow"><span class="ic">✦</span><span data-en="Public comment welcome — share feedback on District 26 schools" data-zh="欢迎公众发言 — 就第26学区学校提供反馈">Public comment welcome — share feedback on District 26 schools</span></div>
+          <div class="mcta">
+            <a class="btn btn-ghost" href="https://zoom.us/meeting/register/xrLSMBUPQeucaaghS0TlYA" target="_blank" rel="noopener"
+               data-en="Register online" data-zh="线上报名">Register online</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <span class="eyebrow" data-en="Three simple steps" data-zh="三个简单步骤">Three simple steps</span>
+      <h2 data-en="How to take part" data-zh="如何参与">How to take part</h2>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3 data-en="Show up — your way" data-zh="选择适合您的方式参加">Show up — your way</h3><p data-en="Join the monthly meeting in person at M.S. 74Q, or online from home. Both are open to every parent in the district." data-zh="您可以亲临 74Q 初中参加月度会议，也可以在家通过网络参加。两种方式都向本学区所有家长开放。">Join the monthly meeting in person at M.S. 74Q, or online from home. Both are open to every parent in the district.</p></div>
+        <div class="step"><div class="n">2</div><h3 data-en="Register if you're online" data-zh="线上参加请先报名">Register if you're online</h3><p data-en="Use the registration button to get the Zoom link by email. Coming in person? Just walk in — no sign-up needed." data-zh="点击报名按钮，即可通过电子邮件获取 Zoom 链接。现场参加无需报名，直接到场即可。">Use the registration button to get the Zoom link by email. Coming in person? Just walk in — no sign-up needed.</p></div>
+        <div class="step"><div class="n">3</div><h3 data-en="Speak during public comment" data-zh="在公众发言环节发言">Speak during public comment</h3><p data-en="Every meeting sets aside time for parents to ask questions and give feedback directly to the council." data-zh="每次会议都会留出时间，让家长直接向委员会提问并提供反馈。">Every meeting sets aside time for parents to ask questions and give feedback directly to the council.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <span class="eyebrow" data-en="What are you looking for?" data-zh="您在寻找什么？">What are you looking for?</span>
+      <h2 data-en="Quick links" data-zh="快速链接">Quick links</h2>
+      <div class="tiles">
+        <button class="tile" onclick="go('meetings')"><span class="t" data-en="Meeting minutes" data-zh="会议记录">Meeting minutes</span><span class="d" data-en="Notes from past meetings, 2005–present" data-zh="历次会议记录，2005年至今">Notes from past meetings, 2005–present</span><span class="arr" data-en="Open →" data-zh="查看 →">Open →</span></button>
+        <button class="tile" onclick="go('meetings')"><span class="t" data-en="Agendas" data-zh="会议议程">Agendas</span><span class="d" data-en="What's on the schedule for upcoming meetings" data-zh="即将召开会议的议程安排">What's on the schedule for upcoming meetings</span><span class="arr" data-en="Open →" data-zh="查看 →">Open →</span></button>
+        <button class="tile" onclick="go('meetings')"><span class="t" data-en="Watch past meetings" data-zh="观看往期会议">Watch past meetings</span><span class="d" data-en="Recordings of recent council meetings" data-zh="近期委员会会议录像">Recordings of recent council meetings</span><span class="arr" data-en="Open →" data-zh="查看 →">Open →</span></button>
+        <button class="tile" onclick="go('actions')"><span class="t" data-en="District 26 rezoning" data-zh="第26学区重新划区">District 26 rezoning</span><span class="d" data-en="Proposed school zoning changes and materials" data-zh="学校划区调整提案及相关材料">Proposed school zoning changes and materials</span><span class="arr" data-en="Open →" data-zh="查看 →">Open →</span></button>
+        <button class="tile" onclick="go('families')"><span class="t" data-en="Find your school" data-zh="查找您的学校">Find your school</span><span class="d" data-en="School maps and zone lookups for the district" data-zh="学区学校地图与划区查询">School maps and zone lookups for the district</span><span class="arr" data-en="Open →" data-zh="查看 →">Open →</span></button>
+        <button class="tile" onclick="go('about')"><span class="t" data-en="Meet the council" data-zh="认识委员会成员">Meet the council</span><span class="d" data-en="Members, committees, and how the council works" data-zh="成员、各委员会及委员会运作方式">Members, committees, and how the council works</span><span class="arr" data-en="Open →" data-zh="查看 →">Open →</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap cols">
+      <div>
+        <span class="eyebrow" data-en="Who we are" data-zh="关于我们">Who we are</span>
+        <h2 data-en="A parent-led voice for public schools" data-zh="由家长主导、为公立学校发声">A parent-led voice for public schools</h2>
+        <p data-en="Community Education Councils began in 2004, replacing the old community school boards. The council advises the Chancellor and the Panel on Educational Policy on the needs of the district, and advocates for District 26 parents and schools."
+           data-zh="社区教育委员会成立于2004年，取代了原有的社区学校董事会。委员会就本学区的需求向教育总监及教育政策委员会提供建议，并为第26学区的家长和学校发声。">Community Education Councils began in 2004, replacing the old community school boards. The council advises the Chancellor and the Panel on Educational Policy on the needs of the district, and advocates for District 26 parents and schools.</p>
+        <p data-en="There are 32 Community Education Councils in New York City — one for each school district. Parents hold the majority of seats, with students and community members in the rest."
+           data-zh="纽约市共有32个社区教育委员会，每个学区一个。家长占据多数席位，其余席位由学生和社区成员担任。">There are 32 Community Education Councils in New York City — one for each school district. Parents hold the majority of seats, with students and community members in the rest.</p>
+        <button class="btn btn-secondary" onclick="go('about')" data-en="More about the council" data-zh="了解更多">More about the council</button>
+      </div>
+      <div>
+        <span class="eyebrow" data-en="What the council does" data-zh="委员会的职责">What the council does</span>
+        <ul class="clean">
+          <li data-en="Promotes high educational standards for student learning across the district" data-zh="在全学区推动高水平的教育标准，促进学生学习">Promotes high educational standards for student learning across the district</li>
+          <li data-en="Works with School Leadership Teams and supports them where it can" data-zh="与学校领导团队合作，并尽力提供支持">Works with School Leadership Teams and supports them where it can</li>
+          <li data-en="Advises the Chancellor and the Panel on Educational Policy on district concerns" data-zh="就本学区关切事项向教育总监及教育政策委员会提供建议">Advises the Chancellor and the Panel on Educational Policy on district concerns</li>
+          <li data-en="Reviews the district's educational programs and their impact on students" data-zh="审查本学区的教育项目及其对学生的影响">Reviews the district's educational programs and their impact on students</li>
+          <li data-en="Approves the school zoning lines for District 26" data-zh="审批第26学区的学校划区界线">Approves the school zoning lines for District 26</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ MEETINGS ============ -->
+<div class="page" id="page-meetings">
+  <section class="band">
+    <div class="wrap">
+      <span class="eyebrow" data-en="Meetings &amp; Participation" data-zh="会议与参与">Meetings &amp; Participation</span>
+      <h2 data-en="Join the next meeting" data-zh="参加下次会议">Join the next meeting</h2>
+      <div class="cols">
+        <div>
+          <p class="lead" data-en="The council meets monthly. Meetings are open to the public and are the main way parents can ask questions and give feedback about District 26 schools."
+             data-zh="委员会每月召开会议。会议向公众开放，是家长就第26学区学校提问和提供反馈的主要途径。">The council meets monthly. Meetings are open to the public and are the main way parents can ask questions and give feedback about District 26 schools.</p>
+          <div class="mrow"><span class="ic">◷</span><span data-en="Wednesday, June 11, 2026 · 7:00 PM Eastern" data-zh="2026年6月11日 星期三 · 美国东部时间晚上7:00">Wednesday, June 11, 2026 · 7:00 PM Eastern</span></div>
+          <div class="mrow"><span class="ic">⚑</span><span data-en="In person: M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364" data-zh="现场：74Q 初中，61-15 Oceania Street, Bayside, NY 11364">In person: M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364</span></div>
+          <div class="mrow"><span class="ic">⌘</span><span data-en="Online: register to receive the Zoom link" data-zh="线上：报名以获取 Zoom 链接">Online: register to receive the Zoom link</span></div>
+          <div class="mcta">
+            <a class="btn btn-primary" href="https://zoom.us/meeting/register/xrLSMBUPQeucaaghS0TlYA" target="_blank" rel="noopener" data-en="Register online" data-zh="线上报名">Register online</a>
+          </div>
+        </div>
+        <div class="note">
+          <strong data-en="Public comment" data-zh="公众发言">Public comment</strong>
+          <p data-en="Time is reserved at every meeting for parents and community members to speak. You can comment in person or online — no advance sign-up is required to attend, though registration is needed for the online link."
+             data-zh="每次会议都为家长和社区成员保留发言时间。您可现场或线上发言；参会无需提前报名，但获取线上链接需要先行报名。" style="margin-bottom:0">Time is reserved at every meeting for parents and community members to speak. You can comment in person or online — no advance sign-up is required to attend, though registration is needed for the online link.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap">
+      <h2 data-en="Minutes &amp; agendas" data-zh="会议记录与议程">Minutes &amp; agendas</h2>
+      <p class="lead" data-en="Documents for the current year, straight from the council's Google Drive. New files appear here automatically."
+         data-zh="本年度的文件直接来自委员会的 Google Drive。新文件会自动显示在此处。">Documents for the current year, straight from the council's Google Drive. New files appear here automatically.</p>
+
+      <div class="note">
+        <strong data-en="How new minutes get posted" data-zh="如何发布新的会议记录">How new minutes get posted</strong>
+        <p style="margin-bottom:0" data-en="After a meeting, a council member signs in to the council's Google Drive and drops the PDF into this folder. That's the whole task — it appears on the site automatically, with no website edit and nothing to publish."
+           data-zh="会议结束后，委员会成员登录委员会的 Google Drive，将 PDF 文件拖入此文件夹即可。这就是全部操作——文件会自动显示在网站上，无需编辑网站，也无需发布。">After a meeting, a council member signs in to the council's Google Drive and drops the PDF into this folder. That's the whole task — it appears on the site automatically, with no website edit and nothing to publish.</p>
+      </div>
+
+      <div class="gwrap">
+        <span class="gtag">
+          <svg class="gd" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z" fill="#5f6368"/></svg>
+          <span data-en="Embedded Google Drive folder — live, auto-updating" data-zh="嵌入式 Google Drive 文件夹 — 实时自动更新">Embedded Google Drive folder — live, auto-updating</span>
+        </span>
+        <!-- ============================================================
+             SET THE DRIVE FOLDER ID: replace YOUR_MINUTES_FOLDER_ID below.
+             1. In Google Drive, open the council's shared "Meeting Minutes" folder.
+             2. Share it once: "Anyone with the link" -> Viewer (every file dropped in later inherits this).
+             3. The folder URL looks like  https://drive.google.com/drive/folders/1AbCdEf...
+                Copy the part after /folders/ and paste it in place of YOUR_MINUTES_FOLDER_ID.
+             Until the ID is set, the box below shows a Google "not found" notice — that is expected.
+        ============================================================ -->
+        <iframe class="drive-embed" title="CEC26 meeting documents (Google Drive)"
+                src="https://drive.google.com/embeddedfolderview?id=10LheaUalqmBBCD0p4pmmXU0gS-BL3T2X#list"
+                loading="lazy"></iframe>
+      </div>
+
+      <p class="ph" data-en="The list above is the council's Google Drive folder, embedded live. It uses Google's plain styling and shows raw file names — keep names tidy like &quot;2026-06 Minutes.pdf&quot; so the list reads well."
+         data-zh="上方列表是嵌入的委员会 Google Drive 文件夹，实时显示。它采用 Google 的朴素样式并显示原始文件名——请保持文件名整洁，如“2026-06 Minutes.pdf”，以便列表清晰易读。">The list above is the council's Google Drive folder, embedded live. It uses Google's plain styling and shows raw file names — keep names tidy like "2026-06 Minutes.pdf" so the list reads well.</p>
+
+      <p class="ph" data-en="Older minutes (2005–2024) live in separate year-range folders in Drive, each embedded the same way on an archive page."
+         data-zh="较早的会议记录（2005–2024）存放在 Drive 中按年份划分的独立文件夹内，并以相同方式嵌入存档页面。">Older minutes (2005–2024) live in separate year-range folders in Drive, each embedded the same way on an archive page.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="page" id="page-about">
+  <section class="band">
+    <div class="wrap">
+      <span class="eyebrow" data-en="About CEC26" data-zh="关于CEC26">About CEC26</span>
+      <h2 data-en="The council and how it works" data-zh="委员会及其运作方式">The council and how it works</h2>
+      <div class="cols">
+        <div>
+          <p data-en="The CEC serves as an advisory board to the Chancellor and the Panel on Educational Policy, and as an advocate for the parents and schools of District 26. Parents control the majority of the council's seats."
+             data-zh="社区教育委员会作为教育总监及教育政策委员会的咨询机构，同时为第26学区的家长和学校发声。委员会的多数席位由家长担任。">The CEC serves as an advisory board to the Chancellor and the Panel on Educational Policy, and as an advocate for the parents and schools of District 26. Parents control the majority of the council's seats.</p>
+          <h3 data-en="Sections" data-zh="栏目">Sections</h3>
+          <ul class="clean">
+            <li data-en="Members — who serves on the council" data-zh="委员会成员 — 现任委员介绍">Members — who serves on the council</li>
+            <li data-en="Committees — the council's working groups" data-zh="各委员会 — 委员会下设工作组">Committees — the council's working groups</li>
+            <li data-en="Bylaws — the rules the council operates under" data-zh="章程 — 委员会的运作规则">Bylaws — the rules the council operates under</li>
+            <li data-en="Schools &amp; Liaisons — schools in the district and their council contacts" data-zh="学校及联络员 — 本学区学校及对应的委员会联络人">Schools &amp; Liaisons — schools in the district and their council contacts</li>
+          </ul>
+        </div>
+        <div class="note">
+          <strong data-en="District 26" data-zh="第26学区">District 26</strong>
+          <p data-en="Northeast Queens — including Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, and Glen Oaks — one of the most linguistically diverse districts in the city." data-zh="皇后区东北部 — 包括 Bayside、Fresh Meadows、Flushing、Little Neck、Douglaston 和 Glen Oaks — 是全市语言最为多元的学区之一。" style="margin-bottom:0">Northeast Queens — including Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, and Glen Oaks — one of the most linguistically diverse districts in the city.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ACTIONS ============ -->
+<div class="page" id="page-actions">
+  <section class="band">
+    <div class="wrap">
+      <span class="eyebrow" data-en="Council Actions" data-zh="委员会行动">Council Actions</span>
+      <h2 data-en="Resolutions, statements &amp; rezoning" data-zh="决议、声明与重新划区">Resolutions, statements &amp; rezoning</h2>
+      <p class="lead" data-en="The formal positions the council takes on behalf of the district, and major work like school rezoning."
+         data-zh="委员会代表本学区采取的正式立场，以及学校重新划区等重要工作。">The formal positions the council takes on behalf of the district, and major work like school rezoning.</p>
+      <div class="tiles">
+        <div class="tile"><span class="t" data-en="Resolutions" data-zh="决议">Resolutions</span><span class="d" data-en="Official positions voted on by the council" data-zh="委员会表决通过的正式立场">Official positions voted on by the council</span></div>
+        <div class="tile"><span class="t" data-en="Statements" data-zh="声明">Statements</span><span class="d" data-en="Public statements from the council" data-zh="委员会发布的公开声明">Public statements from the council</span></div>
+        <div class="tile"><span class="t" data-en="Presentations" data-zh="演示材料">Presentations</span><span class="d" data-en="Slides and materials shared at meetings" data-zh="会议上分享的幻灯片与材料">Slides and materials shared at meetings</span></div>
+        <div class="tile"><span class="t" data-en="District 26 rezoning" data-zh="第26学区重新划区">District 26 rezoning</span><span class="d" data-en="Proposed zoning changes and supporting documents" data-zh="划区调整提案及佐证文件">Proposed zoning changes and supporting documents</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ FAMILIES ============ -->
+<div class="page" id="page-families">
+  <section class="band">
+    <div class="wrap">
+      <span class="eyebrow" data-en="For Families" data-zh="家长与家庭">For Families</span>
+      <h2 data-en="Resources for parents" data-zh="家长资源">Resources for parents</h2>
+      <p class="lead" data-en="Practical information to help you navigate District 26 schools."
+         data-zh="帮助您了解第26学区学校的实用信息。">Practical information to help you navigate District 26 schools.</p>
+      <div class="tiles">
+        <div class="tile"><span class="t" data-en="Parent resources" data-zh="家长资源">Parent resources</span><span class="d" data-en="Guides and information for District 26 families" data-zh="面向第26学区家庭的指南与信息">Guides and information for District 26 families</span></div>
+        <div class="tile"><span class="t" data-en="School maps" data-zh="学校地图">School maps</span><span class="d" data-en="Find your zoned school and district boundaries" data-zh="查找您所属的划区学校及学区边界">Find your zoned school and district boundaries</span></div>
+        <div class="tile"><span class="t" data-en="Helpful links" data-zh="实用链接">Helpful links</span><span class="d" data-en="Useful links across the NYC public school system" data-zh="纽约市公立学校系统的实用链接">Useful links across the NYC public school system</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div class="page" id="page-contact">
+  <section class="band">
+    <div class="wrap">
+      <span class="eyebrow" data-en="Contact &amp; Get Involved" data-zh="联系与参与">Contact &amp; Get Involved</span>
+      <h2 data-en="Get in touch" data-zh="联系我们">Get in touch</h2>
+      <div class="cols">
+        <div>
+          <div class="mrow"><span class="ic">⌂</span><span data-en="61-15 Oceania Street, Room 128A, Bayside, NY 11364" data-zh="61-15 Oceania Street, Room 128A, Bayside, NY 11364">61-15 Oceania Street, Room 128A, Bayside, NY 11364</span></div>
+          <div class="mrow"><span class="ic">☎</span><span data-en="Phone: 718-631-6927" data-zh="电话：718-631-6927">Phone: 718-631-6927</span></div>
+          <div class="mrow"><span class="ic">⎙</span><span data-en="Fax: 718-631-1347" data-zh="传真：718-631-1347">Fax: 718-631-1347</span></div>
+          <div class="mrow"><span class="ic">✉</span><span><a href="mailto:CEC26@schools.nyc.gov">CEC26@schools.nyc.gov</a></span></div>
+        </div>
+        <div class="note">
+          <strong data-en="Come to a meeting" data-zh="参加会议">Come to a meeting</strong>
+          <p data-en="The best way to get involved is to attend the monthly meeting and speak during public comment." data-zh="参与的最佳方式是参加月度会议，并在公众发言环节发言。">The best way to get involved is to attend the monthly meeting and speak during public comment.</p>
+          <a class="btn btn-primary" href="https://zoom.us/meeting/register/xrLSMBUPQeucaaghS0TlYA" target="_blank" rel="noopener" data-en="Register for the next meeting" data-zh="报名参加下次会议">Register for the next meeting</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site">
+  <div class="wrap fgrid">
+    <div>
+      <h3 data-en="Community Education Council, District 26" data-zh="第26学区社区教育委员会">Community Education Council, District 26</h3>
+      <p data-en="The elected parent voice for the public schools of northeast Queens." data-zh="皇后区东北部公立学校的民选家长之声。">The elected parent voice for the public schools of northeast Queens.</p>
+    </div>
+    <div>
+      <h3 data-en="Contact" data-zh="联系方式">Contact</h3>
+      <p>61-15 Oceania Street, Room 128A<br>Bayside, NY 11364<br>
+      718-631-6927<br><a href="mailto:CEC26@schools.nyc.gov">CEC26@schools.nyc.gov</a></p>
+    </div>
+    <div>
+      <h3 data-en="Language" data-zh="语言">Language</h3>
+      <p><a href="#" onclick="setLang('en');return false">English</a> · <a href="#" onclick="setLang('zh');return false">简体中文</a></p>
+      <p class="ph" data-en="Key pages are professionally translated. Document archives remain in English." data-zh="主要页面经专业翻译。文件存档保留英文。">Key pages are professionally translated. Document archives remain in English.</p>
+    </div>
+  </div>
+  <div class="wrap"><p class="fnote" data-en="© Community Education Council, District 26 · New York City. Built and maintained by the council." data-zh="© 纽约市第26学区社区教育委员会。由委员会建设并维护。">© Community Education Council, District 26 · New York City. Built and maintained by the council.</p></div>
+</footer>
+
+<script>
+  var lang = 'en';
+  function setLang(l){
+    lang = (l === 'zh') ? 'zh' : 'en';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      var t = el.getAttribute('data-' + lang);
+      if(t !== null) el.textContent = t;
+    });
+    var q = document.getElementById('q');
+    q.placeholder = q.getAttribute('data-ph-' + lang) || '';
+    document.getElementById('lang-en').setAttribute('aria-current', lang==='en');
+    document.getElementById('lang-zh').setAttribute('aria-current', lang==='zh');
+  }
+
+  function go(id){
+    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+    var page = document.getElementById('page-' + id);
+    if(page) page.classList.add('active');
+    document.querySelectorAll('nav.main button').forEach(function(b){
+      b.setAttribute('aria-current', b.getAttribute('data-nav')===id ? 'page' : 'false');
+    });
+    var nav = document.getElementById('mainnav');
+    nav.classList.remove('open');
+    document.querySelector('.menu-toggle').setAttribute('aria-expanded','false');
+    window.scrollTo({top:0});
+    if(page){ var h=page.querySelector('h2'); if(h){h.setAttribute('tabindex','-1'); h.focus();} }
+  }
+
+  function toggleMenu(btn){
+    var nav = document.getElementById('mainnav');
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }
+
+  var INDEX = {
+    home:['home','meeting','register','participate'],
+    meetings:['meeting','minutes','agenda','agendas','recording','recordings','public comment','zoom','join'],
+    about:['about','members','committee','committees','bylaw','bylaws','schools','liaison','role'],
+    actions:['resolution','resolutions','statement','statements','rezoning','zoning','presentation','presentations'],
+    families:['families','family','parent','parents','resources','school map','maps','links'],
+    contact:['contact','phone','fax','email','address','involved','subscribe']
+  };
+  function doSearch(e){
+    e.preventDefault();
+    var v = document.getElementById('q').value.trim().toLowerCase();
+    if(!v) return false;
+    for(var key in INDEX){
+      if(INDEX[key].some(function(k){return k.indexOf(v)>-1 || v.indexOf(k)>-1;})){
+        go(key); document.getElementById('q').value=''; return false;
+      }
+    }
+    go('home'); return false;
+  }
+
+  // link the utility-bar / footer "contact" anchors to the page router
+  document.querySelectorAll('[data-nav]').forEach(function(el){
+    if(el.tagName==='A'){ el.addEventListener('click', function(ev){ev.preventDefault(); go(el.getAttribute('data-nav'));}); }
+  });
+
+  setLang('en');
+</script>
+</body>
+</html>
