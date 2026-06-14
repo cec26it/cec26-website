@@ -217,6 +217,21 @@
   .ltable .lia{font-weight:600;white-space:nowrap;}
   .lnone{display:none;padding:16px 2px;color:var(--muted);font-size:.92rem;}
 
+  /* live Drive file list (newest first, via Drive API) */
+  .drivelist{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden;
+             max-width:680px;max-height:420px;overflow-y:auto;}
+  .dl-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);
+          text-decoration:none;color:var(--ink);}
+  .dl-row:last-child{border-bottom:none;}
+  .dl-row:hover{background:#f7fafd;}
+  .dl-ic{flex:0 0 auto;font-size:.62rem;font-weight:700;letter-spacing:.03em;color:#b23b2e;
+         border:1px solid #f0cfca;background:#fcf2f0;border-radius:4px;padding:3px 5px;line-height:1;}
+  .dl-ic.doc{color:#1a4fa0;border-color:#cdddf2;background:#eef4fc;}
+  .dl-nm{flex:1;font-size:.95rem;line-height:1.3;word-break:break-word;}
+  .dl-arr{flex:0 0 auto;color:var(--muted);font-size:1rem;}
+  .dl-msg{padding:16px;color:var(--muted);font-size:.92rem;}
+  .dl-msg a{font-weight:700;}
+
   @media (max-width:880px){
     .hero .grid,.cols,.fgrid{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
@@ -469,9 +484,9 @@
                 Copy the part after /folders/ and paste it in place of YOUR_MINUTES_FOLDER_ID.
              Until the ID is set, the box below shows a Google "not found" notice — that is expected.
         ============================================================ -->
-        <iframe class="drive-embed" title="CEC26 meeting documents (Google Drive)"
-                src="https://drive.google.com/embeddedfolderview?id=10LheaUalqmBBCD0p4pmmXU0gS-BL3T2X&orderBy=name%20desc#list"
-                loading="lazy"></iframe>
+        <div class="drivelist" id="drive-minutes" data-folder="10LheaUalqmBBCD0p4pmmXU0gS-BL3T2X">
+          <div class="dl-msg" data-en="Loading documents…" data-zh="正在加载文件…" data-ko="문서 불러오는 중…" data-es="Cargando documentos…">Loading documents…</div>
+        </div>
       </div>
 
       <p class="ph" data-en="The list above is the council's Google Drive folder, embedded live. It uses Google's plain styling and shows raw file names — keep names tidy like &quot;2026-06 Minutes.pdf&quot; so the list reads well."
@@ -618,9 +633,9 @@
              so the newest council term sits at the top. To post a new one, just
              drop the PDF into the council's shared "Resolutions" Drive folder.
         ============================================================ -->
-        <iframe class="drive-embed" title="CEC26 resolutions (Google Drive)"
-                src="https://drive.google.com/embeddedfolderview?id=1GLuZE3lc3t9VMcYjJF8PL90KRLZGXHF5&orderBy=name%20desc#list"
-                loading="lazy"></iframe>
+        <div class="drivelist" id="drive-resolutions" data-folder="1GLuZE3lc3t9VMcYjJF8PL90KRLZGXHF5">
+          <div class="dl-msg" data-en="Loading documents…" data-zh="正在加载文件…" data-ko="문서 불러오는 중…" data-es="Cargando documentos…">Loading documents…</div>
+        </div>
       </div>
 
       <p class="ph" data-en="Each file is named for its council term and title (e.g. “2025-2027 Resolution on …”), so the list groups by term with the newest on top. This is the council's Google Drive folder, embedded live."
@@ -750,6 +765,50 @@
   document.querySelectorAll('[data-nav]').forEach(function(el){
     if(el.tagName==='A'){ el.addEventListener('click', function(ev){ev.preventDefault(); go(el.getAttribute('data-nav'));}); }
   });
+
+  // ----- live Drive folder listing, newest first (Google Drive API) -----
+  var DRIVE_KEY = 'AIzaSyAArxUAEaJaFSEeCadg02mn7Bw6RrL5KM4';
+  function dlEsc(s){ return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function loadDrive(el){
+    var folderId = el.getAttribute('data-folder');
+    var folderUrl = 'https://drive.google.com/drive/folders/' + folderId;
+    var url = 'https://www.googleapis.com/drive/v3/files?q='
+            + encodeURIComponent("'" + folderId + "' in parents and trashed=false")
+            + '&fields=' + encodeURIComponent('files(id,name,mimeType)')
+            + '&pageSize=1000&key=' + DRIVE_KEY;
+    fetch(url).then(function(r){ return r.json(); }).then(function(d){
+      if(!d || d.error || !d.files) throw 0;
+      var files = d.files.slice().sort(function(a, b){
+        var ad = /^[0-9]/.test(a.name), bd = /^[0-9]/.test(b.name);
+        if(ad !== bd) return ad ? -1 : 1;   // dated names first
+        return b.name.localeCompare(a.name); // then newest (descending) on top
+      });
+      if(!files.length){
+        el.innerHTML = '<div class="dl-msg" data-en="No documents yet." data-zh="暂无文件。" data-ko="아직 문서가 없습니다." data-es="Aún no hay documentos.">No documents yet.</div>';
+        setLang(lang); return;
+      }
+      var html = '';
+      files.forEach(function(f){
+        var isDoc = /\.docx?$/i.test(f.name) || (f.mimeType || '').indexOf('word') > -1;
+        html += '<a class="dl-row" href="https://drive.google.com/file/d/' + encodeURIComponent(f.id)
+              + '/view" target="_blank" rel="noopener">'
+              + '<span class="dl-ic' + (isDoc ? ' doc' : '') + '">' + (isDoc ? 'DOC' : 'PDF') + '</span>'
+              + '<span class="dl-nm">' + dlEsc(f.name) + '</span>'
+              + '<span class="dl-arr" aria-hidden="true">↗</span></a>';
+      });
+      el.innerHTML = html;
+    }).catch(function(){
+      el.innerHTML = '<a class="dl-row" href="' + folderUrl + '" target="_blank" rel="noopener">'
+        + '<span class="dl-nm" data-en="Couldn’t load the list — open the folder in Google Drive"'
+        + ' data-zh="无法加载列表 — 在 Google Drive 中打开文件夹"'
+        + ' data-ko="목록을 불러올 수 없습니다 — Google Drive에서 폴더 열기"'
+        + ' data-es="No se pudo cargar la lista — abrir la carpeta en Google Drive">Couldn’t load the list — open the folder in Google Drive</span>'
+        + '<span class="dl-arr" aria-hidden="true">↗</span></a>';
+      setLang(lang);
+    });
+  }
+  document.querySelectorAll('.drivelist').forEach(loadDrive);
 
   setLang('en');
 </script>
