@@ -189,6 +189,34 @@
   .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;}
   .fnote{border-top:1px solid #28405f;margin-top:30px;padding-top:18px;font-size:.8rem;color:#8da3c2;}
 
+  /* council members */
+  .subhead{font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;
+           font-weight:700;color:var(--amber-deep);margin:26px 0 10px;}
+  .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(206px,1fr));gap:12px;}
+  .person{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);
+          border-radius:12px;padding:12px 14px;}
+  .person .av{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--panel-2);
+              color:var(--blue-deep);display:grid;place-items:center;font-weight:700;font-size:.9rem;}
+  .person.officer .av{background:var(--amber);color:var(--ink);}
+  .person .pn{font-weight:700;font-size:1rem;line-height:1.15;}
+  .person .pr{font-size:.82rem;color:var(--muted);}
+
+  /* schools & liaisons table */
+  .lsearch{display:flex;align-items:center;gap:9px;border:1.5px solid var(--line);border-radius:10px;
+           background:#fff;padding:9px 14px;margin:8px 0 16px;max-width:540px;}
+  .lsearch input{border:none;outline:none;flex:1;font-family:var(--sans);font-size:.95rem;
+                 background:transparent;color:var(--ink);}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff;}
+  table.ltable{width:100%;border-collapse:collapse;font-size:.92rem;min-width:680px;}
+  table.ltable th{text-align:left;background:var(--panel);color:var(--ink);font-weight:700;font-size:.72rem;
+                  text-transform:uppercase;letter-spacing:.04em;padding:11px 14px;white-space:nowrap;}
+  table.ltable td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink);}
+  table.ltable tbody tr:hover td{background:#f7fafd;}
+  .ltable .dbn{display:block;font-family:var(--serif);font-size:.72rem;color:var(--muted);letter-spacing:.02em;}
+  .ltable .sn{font-weight:600;}
+  .ltable .lia{font-weight:600;white-space:nowrap;}
+  .lnone{display:none;padding:16px 2px;color:var(--muted);font-size:.92rem;}
+
   @media (max-width:880px){
     .hero .grid,.cols,.fgrid{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
@@ -271,7 +299,6 @@
         <button data-nav="meetings" onclick="go('meetings')" data-en="Meetings &amp; Participation" data-zh="会议与参与" data-ko="회의 및 참여" data-es="Reuniones y participación">Meetings &amp; Participation</button>
         <button data-nav="about" onclick="go('about')" data-en="About CEC26" data-zh="关于CEC26" data-ko="CEC26 소개" data-es="Acerca de CEC26">About CEC26</button>
         <button data-nav="actions" onclick="go('actions')" data-en="Council Actions" data-zh="委员会行动" data-ko="위원회 활동" data-es="Acciones del Consejo">Council Actions</button>
-        <button data-nav="families" onclick="go('families')" data-en="For Families" data-zh="家长与家庭" data-ko="학부모·가정" data-es="Para las familias">For Families</button>
         <button data-nav="contact" onclick="go('contact')" data-en="Contact &amp; Get Involved" data-zh="联系与参与" data-ko="연락 및 참여" data-es="Contacto y participación">Contact &amp; Get Involved</button>
       </nav>
     </div>
@@ -350,8 +377,6 @@
         <button class="tile" onclick="go('meetings')"><span class="t" data-en="Meeting minutes" data-zh="会议记录" data-ko="회의록" data-es="Actas de reuniones">Meeting minutes</span><span class="d" data-en="Notes from past meetings, 2005–present" data-zh="历次会议记录，2005年至今" data-ko="2005년부터 현재까지의 회의 기록" data-es="Notas de reuniones anteriores, 2005–presente">Notes from past meetings, 2005–present</span><span class="arr" data-en="Open →" data-zh="查看 →" data-ko="보기 →" data-es="Abrir →">Open →</span></button>
         <button class="tile" onclick="go('meetings')"><span class="t" data-en="Agendas" data-zh="会议议程" data-ko="안건" data-es="Órdenes del día">Agendas</span><span class="d" data-en="What's on the schedule for upcoming meetings" data-zh="即将召开会议的议程安排" data-ko="다가오는 회의의 일정 안내" data-es="Lo que está previsto para las próximas reuniones">What's on the schedule for upcoming meetings</span><span class="arr" data-en="Open →" data-zh="查看 →" data-ko="보기 →" data-es="Abrir →">Open →</span></button>
         <button class="tile" onclick="go('meetings')"><span class="t" data-en="Watch past meetings" data-zh="观看往期会议" data-ko="지난 회의 시청" data-es="Ver reuniones anteriores">Watch past meetings</span><span class="d" data-en="Recordings of recent council meetings" data-zh="近期委员会会议录像" data-ko="최근 위원회 회의 녹화본" data-es="Grabaciones de reuniones recientes del consejo">Recordings of recent council meetings</span><span class="arr" data-en="Open →" data-zh="查看 →" data-ko="보기 →" data-es="Abrir →">Open →</span></button>
-        <button class="tile" onclick="go('actions')"><span class="t" data-en="District 26 rezoning" data-zh="第26学区重新划区" data-ko="제26교육구 학군 재조정" data-es="Rezonificación del Distrito 26">District 26 rezoning</span><span class="d" data-en="Proposed school zoning changes and materials" data-zh="学校划区调整提案及相关材料" data-ko="학교 학군 변경 제안 및 관련 자료" data-es="Cambios propuestos de zonificación escolar y materiales">Proposed school zoning changes and materials</span><span class="arr" data-en="Open →" data-zh="查看 →" data-ko="보기 →" data-es="Abrir →">Open →</span></button>
-        <button class="tile" onclick="go('families')"><span class="t" data-en="Find your school" data-zh="查找您的学校" data-ko="학교 찾기" data-es="Encuentre su escuela">Find your school</span><span class="d" data-en="School maps and zone lookups for the district" data-zh="学区学校地图与划区查询" data-ko="교육구 학교 지도 및 학군 조회" data-es="Mapas escolares y consulta de zonas del distrito">School maps and zone lookups for the district</span><span class="arr" data-en="Open →" data-zh="查看 →" data-ko="보기 →" data-es="Abrir →">Open →</span></button>
         <button class="tile" onclick="go('about')"><span class="t" data-en="Meet the council" data-zh="认识委员会成员" data-ko="위원회 소개" data-es="Conozca al consejo">Meet the council</span><span class="d" data-en="Members, committees, and how the council works" data-zh="成员、各委员会及委员会运作方式" data-ko="위원, 분과위원회 및 위원회 운영 방식" data-es="Miembros, comités y cómo funciona el consejo">Members, committees, and how the council works</span><span class="arr" data-en="Open →" data-zh="查看 →" data-ko="보기 →" data-es="Abrir →">Open →</span></button>
       </div>
     </div>
@@ -468,25 +493,98 @@
     <div class="wrap">
       <span class="eyebrow" data-en="About CEC26" data-zh="关于CEC26" data-ko="CEC26 소개" data-es="Acerca de CEC26">About CEC26</span>
       <h2 data-en="The council and how it works" data-zh="委员会及其运作方式" data-ko="위원회와 그 운영 방식" data-es="El consejo y cómo funciona">The council and how it works</h2>
-      <div class="cols">
-        <div>
-          <p data-en="The CEC serves as an advisory board to the Chancellor and the Panel on Educational Policy, and as an advocate for the parents and schools of District 26. Parents control the majority of the council's seats."
-             data-zh="社区教育委员会作为教育总监及教育政策委员会的咨询机构，同时为第26学区的家长和学校发声。委员会的多数席位由家长担任。"
-             data-ko="CEC는 교육감과 교육정책위원회의 자문 기구로서, 그리고 제26교육구 학부모와 학교의 대변자로서 활동합니다. 위원회 의석의 다수는 학부모가 차지합니다."
-             data-es="El CEC actúa como junta asesora del Canciller y del Panel de Política Educativa, y como defensor de los padres y las escuelas del Distrito 26. Los padres controlan la mayoría de los puestos del consejo.">The CEC serves as an advisory board to the Chancellor and the Panel on Educational Policy, and as an advocate for the parents and schools of District 26. Parents control the majority of the council's seats.</p>
-          <h3 data-en="Sections" data-zh="栏目" data-ko="항목" data-es="Secciones">Sections</h3>
-          <ul class="clean">
-            <li data-en="Members — who serves on the council" data-zh="委员会成员 — 现任委员介绍" data-ko="위원 — 위원회에서 활동하는 사람들" data-es="Miembros — quiénes integran el consejo">Members — who serves on the council</li>
-            <li data-en="Committees — the council's working groups" data-zh="各委员会 — 委员会下设工作组" data-ko="분과위원회 — 위원회의 실무 그룹" data-es="Comités — los grupos de trabajo del consejo">Committees — the council's working groups</li>
-            <li data-en="Bylaws — the rules the council operates under" data-zh="章程 — 委员会的运作规则" data-ko="정관 — 위원회가 따르는 운영 규칙" data-es="Estatutos — las normas por las que se rige el consejo">Bylaws — the rules the council operates under</li>
-            <li data-en="Schools &amp; Liaisons — schools in the district and their council contacts" data-zh="学校及联络员 — 本学区学校及对应的委员会联络人" data-ko="학교 및 연락 담당자 — 교육구 내 학교와 담당 위원 연락처" data-es="Escuelas y enlaces — las escuelas del distrito y sus contactos en el consejo">Schools &amp; Liaisons — schools in the district and their council contacts</li>
-          </ul>
-        </div>
-        <div class="note">
-          <strong data-en="District 26" data-zh="第26学区" data-ko="제26교육구" data-es="Distrito 26">District 26</strong>
-          <p data-en="Northeast Queens — including Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, and Glen Oaks — one of the most linguistically diverse districts in the city." data-zh="皇后区东北部 — 包括 Bayside、Fresh Meadows、Flushing、Little Neck、Douglaston 和 Glen Oaks — 是全市语言最为多元的学区之一。" data-ko="퀸즈 북동부 — Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, Glen Oaks 등을 포함하며 — 뉴욕시에서 언어적으로 가장 다양한 교육구 중 하나입니다." data-es="Noreste de Queens, que incluye Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston y Glen Oaks, uno de los distritos con mayor diversidad lingüística de la ciudad." style="margin-bottom:0">Northeast Queens — including Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, and Glen Oaks — one of the most linguistically diverse districts in the city.</p>
-        </div>
+      <p class="lead" data-en="The CEC serves as an advisory board to the Chancellor and the Panel on Educational Policy, and as an advocate for the parents and schools of District 26. Parents hold the majority of the council's seats."
+         data-zh="社区教育委员会作为教育总监及教育政策委员会的咨询机构，同时为第26学区的家长和学校发声。委员会的多数席位由家长担任。"
+         data-ko="CEC는 교육감과 교육정책위원회의 자문 기구로서, 그리고 제26교육구 학부모와 학교의 대변자로서 활동합니다. 위원회 의석의 다수는 학부모가 차지합니다."
+         data-es="El CEC actúa como junta asesora del Canciller y del Panel de Política Educativa, y como defensor de los padres y las escuelas del Distrito 26. Los padres tienen la mayoría de los puestos del consejo.">The CEC serves as an advisory board to the Chancellor and the Panel on Educational Policy, and as an advocate for the parents and schools of District 26. Parents hold the majority of the council's seats.</p>
+
+      <h3 data-en="Council members" data-zh="委员会成员" data-ko="위원회 위원" data-es="Miembros del consejo">Council members</h3>
+      <p class="ph" style="margin-top:-8px;margin-bottom:16px" data-en="July 2025 – June 2027 term" data-zh="2025年7月至2027年6月任期" data-ko="2025년 7월 ~ 2027년 6월 임기" data-es="Período de julio de 2025 a junio de 2027">July 2025 – June 2027 term</p>
+
+      <div class="subhead" data-en="Officers" data-zh="执行委员" data-ko="임원" data-es="Directiva">Officers</div>
+      <div class="mgrid">
+        <div class="person officer"><span class="av">AS</span><div><div class="pn">Albert Suhu</div><div class="pr" data-en="President" data-zh="主席" data-ko="회장" data-es="Presidente">President</div></div></div>
+        <div class="person officer"><span class="av">RA</span><div><div class="pn">Ribhi Alam</div><div class="pr" data-en="1st Vice-President" data-zh="第一副主席" data-ko="제1부회장" data-es="Primer vicepresidente">1st Vice-President</div></div></div>
+        <div class="person officer"><span class="av">SL</span><div><div class="pn">Sae Jung Lee</div><div class="pr" data-en="2nd Vice-President" data-zh="第二副主席" data-ko="제2부회장" data-es="Segundo vicepresidente">2nd Vice-President</div></div></div>
+        <div class="person officer"><span class="av">QK</span><div><div class="pn">Qian Kang</div><div class="pr" data-en="Treasurer" data-zh="司库" data-ko="회계" data-es="Tesorero">Treasurer</div></div></div>
+        <div class="person officer"><span class="av">DR</span><div><div class="pn">David Rosenfeld</div><div class="pr" data-en="Recording Secretary" data-zh="记录秘书" data-ko="서기" data-es="Secretario de actas">Recording Secretary</div></div></div>
       </div>
+
+      <div class="subhead" data-en="Members" data-zh="成员" data-ko="위원" data-es="Miembros">Members</div>
+      <div class="mgrid">
+        <div class="person"><span class="av">SH</span><div><div class="pn">Sulinda Hong</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
+        <div class="person"><span class="av">LT</span><div><div class="pn">Louis Tsai</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
+        <div class="person"><span class="av">MH</span><div><div class="pn">Monica Huang</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
+        <div class="person"><span class="av">LT</span><div><div class="pn">Liz Tsen</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
+        <div class="person"><span class="av">DC</span><div><div class="pn">Dennis Chan</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
+      </div>
+
+      <div class="subhead" data-en="Student members" data-zh="学生成员" data-ko="학생 위원" data-es="Miembros estudiantiles">Student members</div>
+      <div class="mgrid">
+        <div class="person"><span class="av">IT</span><div><div class="pn">Ishiah Tandjung</div><div class="pr" data-en="Student member" data-zh="学生成员" data-ko="학생 위원" data-es="Miembro estudiantil">Student member</div></div></div>
+        <div class="person"><span class="av">AC</span><div><div class="pn">Arleen Chodha</div><div class="pr" data-en="Student member" data-zh="学生成员" data-ko="학생 위원" data-es="Miembro estudiantil">Student member</div></div></div>
+      </div>
+
+      <div class="note" style="margin-top:26px">
+        <strong data-en="District 26" data-zh="第26学区" data-ko="제26교육구" data-es="Distrito 26">District 26</strong>
+        <p style="margin-bottom:0" data-en="Northeast Queens — including Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, and Glen Oaks — one of the most linguistically diverse districts in the city." data-zh="皇后区东北部 — 包括 Bayside、Fresh Meadows、Flushing、Little Neck、Douglaston 和 Glen Oaks — 是全市语言最为多元的学区之一。" data-ko="퀸즈 북동부 — Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, Glen Oaks 등을 포함하며 — 뉴욕시에서 언어적으로 가장 다양한 교육구 중 하나입니다." data-es="Noreste de Queens, que incluye Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston y Glen Oaks, uno de los distritos con mayor diversidad lingüística de la ciudad.">Northeast Queens — including Bayside, Fresh Meadows, Flushing, Little Neck, Douglaston, and Glen Oaks — one of the most linguistically diverse districts in the city.</p>
+      </div>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap">
+      <span class="eyebrow" data-en="Schools &amp; Liaisons" data-zh="学校及联络员" data-ko="학교 및 연락 담당자" data-es="Escuelas y enlaces">Schools &amp; Liaisons</span>
+      <h2 data-en="Find your school's council liaison" data-zh="查找您学校的委员会联络员" data-ko="우리 학교의 위원회 연락 담당자 찾기" data-es="Encuentre el enlace del consejo de su escuela">Find your school's council liaison</h2>
+      <p class="lead" data-en="Every District 26 school has a council member as its liaison — the person to reach with school-specific questions. Search for your school below."
+         data-zh="第26学区每所学校都有一名委员会成员担任联络员——有关该校的问题可与其联系。请在下方搜索您的学校。"
+         data-ko="제26교육구의 모든 학교에는 위원회 위원이 연락 담당자로 지정되어 있으며, 학교 관련 문의는 이 담당자에게 하시면 됩니다. 아래에서 학교를 검색하세요."
+         data-es="Cada escuela del Distrito 26 tiene a un miembro del consejo como enlace, la persona a quien dirigirse con preguntas sobre la escuela. Busque su escuela a continuación.">Every District 26 school has a council member as its liaison — the person to reach with school-specific questions. Search for your school below.</p>
+      <div class="lsearch">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#53627A" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+        <input id="lq" type="search" oninput="filterLiaisons()" aria-label="Search schools and liaisons"
+               data-ph-en="Search by school, DBN, area, or liaison…" data-ph-zh="按学校、DBN、地区或联络员搜索…" data-ph-ko="학교, DBN, 지역 또는 연락 담당자로 검색…" data-ph-es="Buscar por escuela, DBN, zona o enlace…" placeholder="Search by school, DBN, area, or liaison…">
+      </div>
+      <div class="tablewrap">
+        <table class="ltable" id="ltable">
+          <thead><tr>
+            <th data-en="School" data-zh="学校" data-ko="학교" data-es="Escuela">School</th>
+            <th data-en="Grades" data-zh="年级" data-ko="학년" data-es="Grados">Grades</th>
+            <th data-en="Address" data-zh="地址" data-ko="주소" data-es="Dirección">Address</th>
+            <th data-en="Council liaison" data-zh="委员会联络员" data-ko="위원회 연락 담당자" data-es="Enlace del consejo">Council liaison</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><span class="dbn">26Q018</span><span class="sn">P.S. 18 The Winchester School</span></td><td>K-5</td><td>86-35 235 Court, Queens Village</td><td class="lia">David Rosenfeld</td></tr>
+            <tr><td><span class="dbn">26Q026</span><span class="sn">P.S. 26 Rufus King School</span></td><td>Pre-K-5</td><td>195-02 69th Avenue, Flushing</td><td class="lia">Temp Assign — Al Suhu</td></tr>
+            <tr><td><span class="dbn">26Q031</span><span class="sn">P.S. 31 The Bayside School</span></td><td>Pre-K-5</td><td>211-45 46th Road, Bayside</td><td class="lia">Ribhi Alam</td></tr>
+            <tr><td><span class="dbn">26Q041</span><span class="sn">P.S. 41 The Crocheron School</span></td><td>K-5</td><td>214-43 35th Avenue, Bayside</td><td class="lia">Monica Huang</td></tr>
+            <tr><td><span class="dbn">26Q046</span><span class="sn">P.S. 46 The Alley Pond School</span></td><td>K-5</td><td>64-45 218th Street, Bayside</td><td class="lia">Al Suhu</td></tr>
+            <tr><td><span class="dbn">26Q067</span><span class="sn">M.S. 67 Louis Pasteur School</span></td><td>6-8</td><td>51-60 Marathon Parkway, Little Neck</td><td class="lia">Liz Tsen</td></tr>
+            <tr><td><span class="dbn">26Q074</span><span class="sn">M.S. 74 Nathaniel Hawthorne</span></td><td>6-8</td><td>61-15 Oceania Street, Bayside</td><td class="lia">Dennis Chan / Sulinda Hong</td></tr>
+            <tr><td><span class="dbn">26Q094</span><span class="sn">P.S. 94 David Porter School</span></td><td>K-5</td><td>41-77 Little Neck Parkway, Little Neck</td><td class="lia">Dennis Chan</td></tr>
+            <tr><td><span class="dbn">26Q098</span><span class="sn">P.S. 98 The Douglaston School</span></td><td>K-5</td><td>40-20 235th Street, Douglaston</td><td class="lia">Ribhi Alam</td></tr>
+            <tr><td><span class="dbn">26Q115</span><span class="sn">P.S. 115 The James J. Ambrose School</span></td><td>Pre-K-5</td><td>80-51 261 Street, Floral Park</td><td class="lia">Monica Huang</td></tr>
+            <tr><td><span class="dbn">26Q133</span><span class="sn">P.S. 133</span></td><td>Pre-K-5</td><td>248-05 86th Avenue, Bellerose</td><td class="lia">Sae-Jung Lee</td></tr>
+            <tr><td><span class="dbn">26Q158</span><span class="sn">M.S. 158 Marie Curie</span></td><td>6-8</td><td>46-35 Oceania Street, Bayside</td><td class="lia">Louis Tsai / Sulinda Hong</td></tr>
+            <tr><td><span class="dbn">26Q159</span><span class="sn">P.S. 159</span></td><td>Pre-K-5</td><td>205-01 33rd Avenue, Bayside</td><td class="lia">David Rosenfield</td></tr>
+            <tr><td><span class="dbn">26Q162</span><span class="sn">P.S. 162 John Golden School</span></td><td>K-5</td><td>201-02 53rd Avenue, Bayside</td><td class="lia">Sulinda Hong</td></tr>
+            <tr><td><span class="dbn">26Q172</span><span class="sn">M.S. 172 Irwin Altman</span></td><td>6-8</td><td>81-14 257th Street, Floral Park</td><td class="lia">Sae-Jung Lee</td></tr>
+            <tr><td><span class="dbn">26Q173</span><span class="sn">P.S. 173 The Fresh Meadow School</span></td><td>Pre-K-5</td><td>174-10 67th Avenue, Flushing</td><td class="lia">Louis Tsai</td></tr>
+            <tr><td><span class="dbn">26Q178</span><span class="sn">P.S./I.S. 178 The Holliswood School</span></td><td>Pre-K-8</td><td>189-10 Radnor Road, Jamaica</td><td class="lia">Al Suhu</td></tr>
+            <tr><td><span class="dbn">26Q186</span><span class="sn">P.S. 186 The Castlewood School</span></td><td>Pre-K-5</td><td>252-12 72nd Avenue, Bellerose</td><td class="lia">David Rosenfield</td></tr>
+            <tr><td><span class="dbn">26Q188</span><span class="sn">P.S. 188 The Kingsbury School</span></td><td>K-5</td><td>218-12 Hartland Avenue &amp; 216-15 Peck Avenue, Bayside</td><td class="lia">Liz Tsen</td></tr>
+            <tr><td><span class="dbn">26Q191</span><span class="sn">P.S. 191 The Mayflower School</span></td><td>Pre-K-5</td><td>85-15 258th Street, Floral Park</td><td class="lia">Sae-Jung Lee</td></tr>
+            <tr><td><span class="dbn">26Q203</span><span class="sn">P.S. 203 The Oakland Gardens School</span></td><td>Pre-K-5</td><td>53-11 Springfield Blvd., Bayside</td><td class="lia">Qian Kang</td></tr>
+            <tr><td><span class="dbn">26Q205</span><span class="sn">P.S. 205 Alexander Graham Bell School</span></td><td>Pre-K-5</td><td>75-25 Bell Boulevard, Bayside</td><td class="lia">David Rosenfield</td></tr>
+            <tr><td><span class="dbn">26Q213</span><span class="sn">P.S. 213 Carl Ullman School</span></td><td>Pre-K-5</td><td>231-02 67th Avenue, Bayside</td><td class="lia">Liz Tsen</td></tr>
+            <tr><td><span class="dbn">26Q216</span><span class="sn">M.S. 216 George Ryan</span></td><td>6-8</td><td>64-20 175th Street, Flushing</td><td class="lia">Al Suhu</td></tr>
+            <tr><td><span class="dbn">26Q221</span><span class="sn">P.S. 221 The North Hills School</span></td><td>Pre-K-5</td><td>57-40 Marathon Parkway, Little Neck</td><td class="lia">Dennis Chan / Sae-Jung Lee</td></tr>
+            <tr><td><span class="dbn">26Q266</span><span class="sn">P.S./I.S. 266</span></td><td>Pre-K-8</td><td>74-10 Commonwealth Blvd., Glen Oaks</td><td class="lia">Qian Kang</td></tr>
+            <tr><td><span class="dbn">26Q332</span><span class="sn">P.S. 376</span></td><td>K</td><td>210-07 48th Avenue, Bayside</td><td class="lia">Louis Tsai</td></tr>
+            <tr><td><span class="dbn">26Q390</span><span class="sn">P.S. 390Q The CIVIC School of Bayside Hills</span></td><td>Pre-K-5</td><td>56-10 214th Street, Bayside</td><td class="lia">Louis Tsai</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lnone" id="lnone" data-en="No schools match your search." data-zh="没有符合搜索条件的学校。" data-ko="검색과 일치하는 학교가 없습니다." data-es="Ninguna escuela coincide con su búsqueda.">No schools match your search.</p>
     </div>
   </section>
 </div>
@@ -529,25 +627,6 @@
          data-zh="每个文件以委员会任期和标题命名（如“2025-2027 Resolution on …”），因此列表按任期分组、最新在前。这是嵌入显示的委员会 Google Drive 文件夹。"
          data-ko="각 파일은 위원회 임기와 제목으로 명명됩니다(예: “2025-2027 Resolution on …”). 따라서 목록은 임기별로 묶여 최신순으로 표시됩니다. 실시간으로 임베드된 위원회 Google Drive 폴더입니다."
          data-es="Cada archivo se nombra por el término del consejo y su título (p. ej., «2025-2027 Resolution on …»), de modo que la lista se agrupa por término con lo más reciente arriba. Es la carpeta de Google Drive del consejo, incrustada en vivo.">Each file is named for its council term and title (e.g. “2025-2027 Resolution on …”), so the list groups by term with the newest on top. This is the council's Google Drive folder, embedded live.</p>
-    </div>
-  </section>
-</div>
-
-<!-- ============ FAMILIES ============ -->
-<div class="page" id="page-families">
-  <section class="band">
-    <div class="wrap">
-      <span class="eyebrow" data-en="For Families" data-zh="家长与家庭" data-ko="학부모·가정" data-es="Para las familias">For Families</span>
-      <h2 data-en="Resources for parents" data-zh="家长资源" data-ko="학부모를 위한 자료" data-es="Recursos para padres">Resources for parents</h2>
-      <p class="lead" data-en="Practical information to help you navigate District 26 schools."
-         data-zh="帮助您了解第26学区学校的实用信息。"
-         data-ko="제26교육구 학교를 이해하는 데 도움이 되는 실용 정보입니다."
-         data-es="Información práctica para ayudarle a orientarse en las escuelas del Distrito 26.">Practical information to help you navigate District 26 schools.</p>
-      <div class="tiles">
-        <div class="tile"><span class="t" data-en="Parent resources" data-zh="家长资源" data-ko="학부모 자료" data-es="Recursos para padres">Parent resources</span><span class="d" data-en="Guides and information for District 26 families" data-zh="面向第26学区家庭的指南与信息" data-ko="제26교육구 가정을 위한 안내 및 정보" data-es="Guías e información para las familias del Distrito 26">Guides and information for District 26 families</span></div>
-        <div class="tile"><span class="t" data-en="School maps" data-zh="学校地图" data-ko="학교 지도" data-es="Mapas escolares">School maps</span><span class="d" data-en="Find your zoned school and district boundaries" data-zh="查找您所属的划区学校及学区边界" data-ko="배정 학교와 교육구 경계를 확인하세요" data-es="Encuentre su escuela asignada y los límites del distrito">Find your zoned school and district boundaries</span></div>
-        <div class="tile"><span class="t" data-en="Helpful links" data-zh="实用链接" data-ko="유용한 링크" data-es="Enlaces útiles">Helpful links</span><span class="d" data-en="Useful links across the NYC public school system" data-zh="纽约市公立学校系统的实用链接" data-ko="뉴욕시 공립학교 시스템 전반의 유용한 링크" data-es="Enlaces útiles del sistema de escuelas públicas de NYC">Useful links across the NYC public school system</span></div>
-      </div>
     </div>
   </section>
 </div>
@@ -607,8 +686,9 @@
       var t = el.getAttribute('data-' + lang);
       if(t !== null) el.textContent = t;
     });
-    var q = document.getElementById('q');
-    q.placeholder = q.getAttribute('data-ph-' + lang) || '';
+    document.querySelectorAll('[data-ph-en]').forEach(function(el){
+      el.placeholder = el.getAttribute('data-ph-' + lang) || '';
+    });
     LANGS.forEach(function(code){
       var b = document.getElementById('lang-' + code);
       if(b) b.setAttribute('aria-current', lang===code);
@@ -635,12 +715,23 @@
     btn.setAttribute('aria-expanded', open);
   }
 
+  function filterLiaisons(){
+    var v = document.getElementById('lq').value.trim().toLowerCase();
+    var rows = document.querySelectorAll('#ltable tbody tr');
+    var shown = 0;
+    rows.forEach(function(r){
+      var match = r.textContent.toLowerCase().indexOf(v) > -1;
+      r.style.display = match ? '' : 'none';
+      if(match) shown++;
+    });
+    document.getElementById('lnone').style.display = shown ? 'none' : 'block';
+  }
+
   var INDEX = {
     home:['home','meeting','register','participate'],
     meetings:['meeting','minutes','agenda','agendas','recording','recordings','public comment','zoom','join'],
-    about:['about','members','committee','committees','bylaw','bylaws','schools','liaison','role'],
+    about:['about','members','member','officers','president','treasurer','secretary','committee','committees','bylaw','bylaws','schools','school','liaison','liaisons','dbn','role'],
     actions:['resolution','resolutions','statement','statements','rezoning','zoning','presentation','presentations'],
-    families:['families','family','parent','parents','resources','school map','maps','links'],
     contact:['contact','phone','fax','email','address','involved','subscribe']
   };
   function doSearch(e){
