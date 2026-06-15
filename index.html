@@ -201,6 +201,8 @@
   .person.officer .av{background:var(--amber);color:var(--ink);}
   .person .pn{font-weight:700;font-size:1rem;line-height:1.15;}
   .person .pr{font-size:.82rem;color:var(--muted);}
+  .person.vacant .av{background:var(--line);color:var(--muted);}
+  .person.vacant .pn{color:var(--muted);font-style:italic;font-weight:600;}
 
   /* schools & liaisons table */
   .lsearch{display:flex;align-items:center;gap:9px;border:1.5px solid var(--line);border-radius:10px;
@@ -557,7 +559,7 @@
       <p class="ph" style="margin-top:-8px;margin-bottom:16px" data-en="July 2025 – June 2027 term" data-zh="2025年7月至2027年6月任期" data-ko="2025년 7월 ~ 2027년 6월 임기" data-es="Período de julio de 2025 a junio de 2027">July 2025 – June 2027 term</p>
 
       <div class="subhead" data-en="Officers" data-zh="执行委员" data-ko="임원" data-es="Directiva">Officers</div>
-      <div class="mgrid">
+      <div class="mgrid" id="grp-officers">
         <div class="person officer"><span class="av">AS</span><div><div class="pn">Albert Suhu</div><div class="pr" data-en="President" data-zh="主席" data-ko="회장" data-es="Presidente">President</div></div></div>
         <div class="person officer"><span class="av">RA</span><div><div class="pn">Ribhi Alam</div><div class="pr" data-en="1st Vice-President" data-zh="第一副主席" data-ko="제1부회장" data-es="Primer vicepresidente">1st Vice-President</div></div></div>
         <div class="person officer"><span class="av">SL</span><div><div class="pn">Sae Jung Lee</div><div class="pr" data-en="2nd Vice-President" data-zh="第二副主席" data-ko="제2부회장" data-es="Segundo vicepresidente">2nd Vice-President</div></div></div>
@@ -566,7 +568,7 @@
       </div>
 
       <div class="subhead" data-en="Members" data-zh="成员" data-ko="위원" data-es="Miembros">Members</div>
-      <div class="mgrid">
+      <div class="mgrid" id="grp-members">
         <div class="person"><span class="av">SH</span><div><div class="pn">Sulinda Hong</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
         <div class="person"><span class="av">LT</span><div><div class="pn">Louis Tsai</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
         <div class="person"><span class="av">MH</span><div><div class="pn">Monica Huang</div><div class="pr" data-en="Member" data-zh="成员" data-ko="위원" data-es="Miembro">Member</div></div></div>
@@ -575,7 +577,7 @@
       </div>
 
       <div class="subhead" data-en="Student members" data-zh="学生成员" data-ko="학생 위원" data-es="Miembros estudiantiles">Student members</div>
-      <div class="mgrid">
+      <div class="mgrid" id="grp-students">
         <div class="person"><span class="av">IT</span><div><div class="pn">Ishiah Tandjung</div><div class="pr" data-en="Student member" data-zh="学生成员" data-ko="학생 위원" data-es="Miembro estudiantil">Student member</div></div></div>
         <div class="person"><span class="av">AC</span><div><div class="pn">Arleen Chodha</div><div class="pr" data-en="Student member" data-zh="学生成员" data-ko="학생 위원" data-es="Miembro estudiantil">Student member</div></div></div>
       </div>
@@ -952,6 +954,76 @@
     }).catch(function(){ /* keep the hard-coded liaison names */ });
   }
   loadLiaisons();
+
+  /* ============================================================
+     COUNCIL MEMBERS — roles & names driven by a Google Sheet (gviz).
+     Edit the Role / Name cells in:
+     https://docs.google.com/spreadsheets/d/1vlPrUMSpye6LGWrS0bUm3Ja5N-TPDn6R20uWEG45q4g
+     A blank Name shows as "-vacant-". Officer roles fill the Officers group,
+     "Member" the Members group, "Student member" the Student members group.
+     If the sheet can't be read, the cards hard-coded above are kept.
+     ============================================================ */
+  var MEMBER_SHEET_ID = '1vlPrUMSpye6LGWrS0bUm3Ja5N-TPDn6R20uWEG45q4g';
+  var ROLE_I18N = {
+    'President':{en:'President',zh:'主席',ko:'회장',es:'Presidente'},
+    '1st Vice-President':{en:'1st Vice-President',zh:'第一副主席',ko:'제1부회장',es:'Primer vicepresidente'},
+    '2nd Vice-President':{en:'2nd Vice-President',zh:'第二副主席',ko:'제2부회장',es:'Segundo vicepresidente'},
+    'Treasurer':{en:'Treasurer',zh:'司库',ko:'회계',es:'Tesorero'},
+    'Recording Secretary':{en:'Recording Secretary',zh:'记录秘书',ko:'서기',es:'Secretario de actas'},
+    'Member':{en:'Member',zh:'成员',ko:'위원',es:'Miembro'},
+    'Student member':{en:'Student member',zh:'学生成员',ko:'학생 위원',es:'Miembro estudiantil'}
+  };
+  var VACANT_LABEL = {en:'-vacant-',zh:'-空缺-',ko:'-공석-',es:'-vacante-'};
+  function memberInitials(name){
+    var p = String(name).trim().split(/\s+/).filter(Boolean);
+    if(!p.length) return '–';
+    if(p.length === 1) return p[0].slice(0,2).toUpperCase();
+    return (p[0][0] + p[p.length-1][0]).toUpperCase();
+  }
+  function i18nAttrs(map){ return LANGS.map(function(l){ return ' data-' + l + '="' + dlEsc(map[l] || map.en) + '"'; }).join(''); }
+  function memberCard(name, role){
+    var isOfficer = !(role === 'Member' || /student/i.test(role));
+    var vacant = !name || !String(name).trim();
+    var rt = ROLE_I18N[role] || {en:role, zh:role, ko:role, es:role};
+    var pr = '<div class="pr"' + i18nAttrs(rt) + '>' + dlEsc(rt[lang] || rt.en) + '</div>';
+    var av, pn;
+    if(vacant){
+      av = '–';
+      pn = '<div class="pn"' + i18nAttrs(VACANT_LABEL) + '>' + dlEsc(VACANT_LABEL[lang] || VACANT_LABEL.en) + '</div>';
+    } else {
+      av = memberInitials(name);
+      pn = '<div class="pn">' + dlEsc(String(name).trim()) + '</div>';
+    }
+    return '<div class="person' + (isOfficer ? ' officer' : '') + (vacant ? ' vacant' : '') + '">'
+         + '<span class="av">' + dlEsc(av) + '</span><div>' + pn + pr + '</div></div>';
+  }
+  function loadMembers(){
+    var url = 'https://docs.google.com/spreadsheets/d/' + MEMBER_SHEET_ID + '/gviz/tq?tqx=out:json';
+    fetch(url).then(function(r){ return r.text(); }).then(function(txt){
+      var j = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+      var rows = (j.table && j.table.rows) || [];
+      var off = [], mem = [], stu = [];
+      rows.forEach(function(row){
+        var c = row.c || [];
+        var role = c[0] && c[0].v, name = c[1] ? c[1].v : null;
+        if(!role) return;
+        role = String(role).trim();
+        if(role.toLowerCase() === 'role') return;   // header row
+        var html = memberCard(name, role);
+        if(/student/i.test(role)) stu.push(html);
+        else if(role === 'Member') mem.push(html);
+        else off.push(html);
+      });
+      var elO = document.getElementById('grp-officers'),
+          elM = document.getElementById('grp-members'),
+          elS = document.getElementById('grp-students');
+      if(off.length && elO) elO.innerHTML = off.join('');
+      if(mem.length && elM) elM.innerHTML = mem.join('');
+      if(stu.length && elS) elS.innerHTML = stu.join('');
+      setLang(lang);
+    }).catch(function(){ /* keep the hard-coded cards */ });
+  }
+  loadMembers();
 </script>
 </body>
 </html>
