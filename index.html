@@ -919,6 +919,39 @@
     }).catch(function(){ /* keep the hard-coded fallback values */ });
   }
   loadMeetingInfo();
+
+  /* ============================================================
+     SCHOOL LIAISONS — names driven by a Google Sheet (gviz, no API key).
+     To reassign a liaison, edit the "Council liaison" cell in:
+     https://docs.google.com/spreadsheets/d/1--5Ps5Hc6Ld7Xmp2sSLFExh3vngUMBqol8pv4ZifiAk
+     Rows are matched to the table by DBN (first 6 characters of the School cell,
+     e.g. "26Q018"). Grades/Address stay in the page; only the liaison name updates.
+     If the sheet can't be read, the names hard-coded in the table are kept.
+     ============================================================ */
+  var LIAISON_SHEET_ID = '1--5Ps5Hc6Ld7Xmp2sSLFExh3vngUMBqol8pv4ZifiAk';
+  function loadLiaisons(){
+    var url = 'https://docs.google.com/spreadsheets/d/' + LIAISON_SHEET_ID + '/gviz/tq?tqx=out:json';
+    fetch(url).then(function(r){ return r.text(); }).then(function(txt){
+      var j = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+      var rows = (j.table && j.table.rows) || [];
+      var map = {};
+      rows.forEach(function(row){
+        var c = row.c || [];
+        var school = c[0] && c[0].v, lia = c[1] && c[1].v;
+        if(!school || !lia) return;
+        var m = String(school).match(/^(\d{2}[A-Za-z]\d{3})/);   // skips the header row
+        if(m) map[m[1].toUpperCase()] = String(lia).trim();
+      });
+      if(!Object.keys(map).length) return;
+      document.querySelectorAll('#ltable tbody tr').forEach(function(tr){
+        var dbnEl = tr.querySelector('.dbn'), liaEl = tr.querySelector('.lia');
+        if(!dbnEl || !liaEl) return;
+        var name = map[dbnEl.textContent.trim().toUpperCase()];
+        if(name) liaEl.textContent = name;
+      });
+    }).catch(function(){ /* keep the hard-coded liaison names */ });
+  }
+  loadLiaisons();
 </script>
 </body>
 </html>
