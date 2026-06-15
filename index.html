@@ -448,7 +448,7 @@
              data-zh="委员会每月召开会议。会议向公众开放，是家长就第26学区学校提问和提供反馈的主要途径。"
              data-ko="위원회는 매월 회의를 엽니다. 회의는 일반에 공개되며, 학부모가 제26교육구 학교에 대해 질문하고 의견을 전달할 수 있는 주요 통로입니다."
              data-es="El consejo se reúne mensualmente. Las reuniones son abiertas al público y son la principal vía para que los padres hagan preguntas y comenten sobre las escuelas del Distrito 26.">The council meets monthly. Meetings are open to the public and are the main way parents can ask questions and give feedback about District 26 schools.</p>
-          <div class="mrow"><span class="ic">◷</span><span data-en="Thursday, July 9, 2026 · 6:30 PM Eastern" data-zh="2026年7月9日 星期四 · 美国东部时间晚上6:30" data-ko="2026년 7월 9일 목요일 · 동부 표준시 오후 6:30" data-es="jueves, 9 de julio de 2026 · 6:30 p. m. hora del Este">Thursday, July 9, 2026 · 6:30 PM Eastern</span></div>
+          <div class="mrow"><span class="ic">◷</span><span id="meet-when" data-en="Thursday, July 9, 2026 · 6:30 PM Eastern" data-zh="2026年7月9日 星期四 · 美国东部时间晚上6:30" data-ko="2026년 7월 9일 목요일 · 동부 표준시 오후 6:30" data-es="jueves, 9 de julio de 2026 · 6:30 p. m. hora del Este">Thursday, July 9, 2026 · 6:30 PM Eastern</span></div>
           <div class="mrow"><span class="ic">⚑</span><span data-en="In person: M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364" data-zh="现场：74Q 初中，61-15 Oceania Street, Bayside, NY 11364" data-ko="현장: M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364" data-es="En persona: M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364">In person: M.S. 74Q, 61-15 Oceania Street, Bayside, NY 11364</span></div>
           <div class="mrow"><span class="ic">⌘</span><span data-en="Online: register to receive the Zoom link" data-zh="线上：报名以获取 Zoom 链接" data-ko="온라인: 등록하면 Zoom 링크를 받습니다" data-es="En línea: regístrese para recibir el enlace de Zoom">Online: register to receive the Zoom link</span></div>
           <div class="mcta">
@@ -863,6 +863,62 @@
   document.querySelectorAll('.drivelist').forEach(loadDrive);
 
   setLang('en');
+
+  /* ============================================================
+     NEXT MEETING — driven by a Google Sheet (gviz, no API key).
+     To change the next meeting, edit the Date and Time cells in:
+     https://docs.google.com/spreadsheets/d/1LHXugo9WSaR8jm4HvHJt9S6_3pBJImwySpEerACEMvI
+     The site formats the date/time for all four languages automatically.
+     If the sheet can't be read, the card keeps the values hard-coded above.
+     ============================================================ */
+  var MEETING_SHEET_ID = '1LHXugo9WSaR8jm4HvHJt9S6_3pBJImwySpEerACEMvI';
+  function loadMeetingInfo(){
+    var url = 'https://docs.google.com/spreadsheets/d/' + MEETING_SHEET_ID + '/gviz/tq?tqx=out:json';
+    fetch(url).then(function(r){ return r.text(); }).then(function(txt){
+      var j = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+      var rows = (j.table && j.table.rows) || [];
+      if(!rows.length) return;
+      var cols = (j.table.cols || []).map(function(c){ return (c.label || '').toLowerCase(); });
+      var di = cols.indexOf('date'); if(di < 0) di = 0;
+      var ti = cols.indexOf('time'); if(ti < 0) ti = 1;
+      var c = rows[0].c || [];
+      function ints(v){ return (String(v).match(/-?\d+/g) || []).map(Number); }
+      function ymd(cell){
+        var v = cell && cell.v;
+        if(typeof v === 'string' && v.indexOf('Date(') === 0){ var n = ints(v); return [n[0], n[1], n[2]]; }
+        var m = String((cell && (cell.f || cell.v)) || '').match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+        return m ? [+m[1], +m[2] - 1, +m[3]] : null;
+      }
+      function hm(cell){
+        var v = cell && cell.v;
+        if(typeof v === 'string' && v.indexOf('Date(') === 0){ var n = ints(v); return [n[3] || 0, n[4] || 0]; }
+        var f = String((cell && (cell.f || cell.v)) || '');
+        var m = f.match(/(\d{1,2}):(\d{2})\s*([ap])\.?\s*m\.?/i);
+        if(m){ var h = +m[1] % 12; if(/p/i.test(m[3])) h += 12; return [h, +m[2]]; }
+        m = f.match(/(\d{1,2}):(\d{2})/);
+        return m ? [+m[1], +m[2]] : null;
+      }
+      var Y = ymd(c[di]); if(!Y) return;
+      var T = hm(c[ti]) || [19, 0];
+      var d = new Date(Y[0], Y[1], Y[2], T[0], T[1]);
+      if(isNaN(d.getTime())) return;
+      var LOC = { en:'en-US', zh:'zh-CN', ko:'ko-KR', es:'es-ES' };
+      var TZ  = { en:['', ' Eastern Time'], es:['', ' hora del Este'], zh:['美国东部时间 ', ''], ko:['동부 표준시 ', ''] };
+      var dv = {}, tv = {}, cv = {};
+      LANGS.forEach(function(l){
+        var ds = new Intl.DateTimeFormat(LOC[l], { weekday:'long', year:'numeric', month:'long', day:'numeric' }).format(d);
+        var ts = new Intl.DateTimeFormat(LOC[l], { hour:'numeric', minute:'2-digit', hour12:true }).format(d);
+        ts = TZ[l][0] + ts + TZ[l][1];
+        dv[l] = ds; tv[l] = ts; cv[l] = ds + ' · ' + ts;
+      });
+      function apply(el, vals){ if(!el) return; LANGS.forEach(function(l){ el.setAttribute('data-' + l, vals[l]); }); }
+      apply(document.querySelector('.mcard .mdate'), dv);
+      apply(document.querySelector('.mcard .mtime'), tv);
+      apply(document.getElementById('meet-when'), cv);
+      setLang(lang);
+    }).catch(function(){ /* keep the hard-coded fallback values */ });
+  }
+  loadMeetingInfo();
 </script>
 </body>
 </html>
