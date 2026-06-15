@@ -233,6 +233,11 @@
   .dl-msg{padding:16px;color:var(--muted);font-size:.92rem;}
   .dl-msg a{font-weight:700;}
 
+  /* video / playlist embed */
+  .video-embed{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;
+               border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000;}
+  .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+
   @media (max-width:880px){
     .hero .grid,.cols,.fgrid{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
@@ -498,6 +503,31 @@
          data-ko="위 목록은 실시간으로 임베드된 위원회의 Google Drive 폴더입니다. Google의 기본 스타일을 사용하며 원본 파일명을 그대로 표시하므로, 목록이 깔끔하게 보이도록 “2026-06 Minutes.pdf”와 같이 파일명을 정돈해 주세요."
          data-es="La lista anterior es la carpeta de Google Drive del consejo, incrustada en vivo. Usa el estilo sencillo de Google y muestra los nombres de archivo tal cual: mantenga nombres ordenados como «2026-06 Minutes.pdf» para que la lista se lea bien.">The list above is the council's Google Drive folder, embedded live. It uses Google's plain styling and shows raw file names — keep names tidy like "2026-06 Minutes.pdf" so the list reads well.</p>
 
+    </div>
+  </section>
+  <section class="band" id="recordings">
+    <div class="wrap">
+      <h2 data-en="Meeting recordings" data-zh="会议录像" data-ko="회의 영상" data-es="Grabaciones de reuniones">Meeting recordings</h2>
+      <p class="lead" data-en="Watch recordings of recent council meetings. New videos appear here automatically as they are added to the playlist."
+         data-zh="观看近期委员会会议的录像。新视频在加入播放列表后会自动显示在此处。"
+         data-ko="최근 위원회 회의 영상을 시청하세요. 재생목록에 추가되면 새 영상이 자동으로 여기에 표시됩니다."
+         data-es="Vea las grabaciones de las reuniones recientes del consejo. Los nuevos videos aparecen aquí automáticamente al añadirse a la lista de reproducción.">Watch recordings of recent council meetings. New videos appear here automatically as they are added to the playlist.</p>
+      <!-- ============================================================
+           MEETING RECORDINGS — how to update (no website edit needed):
+           Add the new video to the council's YouTube playlist and it
+           appears here automatically. To swap the whole playlist, change
+           the list=... ID in BOTH the iframe src and the button href below.
+        ============================================================ -->
+      <div class="video-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=PL7eba6o8359FKK-QFVIAUeRCP8PjO2SVe"
+                title="CEC26 meeting recordings" loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+      </div>
+      <p style="margin-top:18px">
+        <a class="btn btn-secondary" href="https://www.youtube.com/playlist?list=PL7eba6o8359FKK-QFVIAUeRCP8PjO2SVe" target="_blank" rel="noopener"
+           data-en="Watch all on YouTube ↗" data-zh="在 YouTube 上观看全部 ↗" data-ko="YouTube에서 전체 보기 ↗" data-es="Ver todo en YouTube ↗">Watch all on YouTube ↗</a>
+      </p>
     </div>
   </section>
 </div>
